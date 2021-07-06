@@ -11,7 +11,8 @@ public class StockMain
 	public static final int CALCULATE_TOTAL_VALUE = 5;
 	public static final int BUY_STOCKS = 6;
 	public static final int SELL_STOCKS = 7;
-	public static final int QUIT = 8;
+	public static final int CHECK_PAST_TRASACTIONS = 8;	
+	public static final int QUIT = 0;
 
 	public static void main(String[] args)
 	{
@@ -24,7 +25,8 @@ public class StockMain
 			System.out.println("1) Add Stocks \n2) Get details"
 					+ " \n3) Get details of particular Stock \n4) Calculate value of each Stock"
 					+ " \n5) Calculate total value \n6) Buy Stocks "
-					+ "\n7) Sell Stocks \n8) Quit");
+					+ "\n7) Sell Stocks \n8) Check Past Transaction"
+					+ "\n0)Quit");
 			System.out.println("Enter Your Choice ");
 
 			int userChoice = scanner.nextInt();
@@ -99,6 +101,12 @@ public class StockMain
 				System.out.println("Enter the number of shares you want to purchase");
 				int amount  = scanner.nextInt();
 				newStocks.buyStocks(amount , symbol);
+				break;
+			}
+			//case to check past transaction details;
+			case CHECK_PAST_TRASACTIONS :
+			{
+				newStocks.getTrasaction();
 				break;
 			}
 			

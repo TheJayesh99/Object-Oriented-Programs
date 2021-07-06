@@ -16,4 +16,6 @@ public interface StockServices
 	public void buyStocks(int amount , String symbol);
 	//method to sell stocks
 	public void sellStocks(String sellStocks,int amount);
+	//method to show past transaction
+	public void getTrasaction();
 }

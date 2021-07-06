@@ -1,10 +1,12 @@
 package com.bridgelabz.stockaccount;
 
 import java.util.LinkedList;
+import java.util.Stack;
 
 public class StockServiceImplementation implements StockServices
 {
 	LinkedList <StockDetails> stockslist = new LinkedList<StockDetails>();
+	Stack<String> stockTransaction = new Stack<String>();
 
 	@Override
 	public void addStock(StockDetails stock)
@@ -15,9 +17,11 @@ public class StockServiceImplementation implements StockServices
 		}
 		else
 		{
-
+			
 			stockslist.add(stock);
 			System.out.println(stock.getStockName() +" Added sucessfully");
+			String transaction = "Purchased : The "+ stock.getNumberofShare() +" of stock "+stock.getStockSymbol();
+			stockTransaction.push(transaction);
 		}
 	}
 	private boolean ItemAlreadyPresent(StockDetails stock)
@@ -96,7 +100,9 @@ public class StockServiceImplementation implements StockServices
 		{
 			if (stocks.getStockSymbol().equals(symbol))
 			{	
-				stocks.setNumberofShare(stocks.getNumberofShare()+amount);; 
+				stocks.setNumberofShare(stocks.getNumberofShare()+amount);
+				String transaction = "Purchased :  The "+ amount +" of stock "+stocks.getStockSymbol();
+				stockTransaction.push(transaction);
 				checkItem = true;
 			}
 		}
@@ -113,6 +119,7 @@ public class StockServiceImplementation implements StockServices
 	@Override
 	public void sellStocks(String symbol,int amount) {
 		boolean checkItemRemoved = false;
+		String transaction = null;
 		for (StockDetails stocks : stockslist)
 		{
 			if (stocks.getStockSymbol().equals(symbol))
@@ -120,9 +127,12 @@ public class StockServiceImplementation implements StockServices
 				if(stocks.getNumberofShare() - amount > 0)
 				{					
 					stocks.setNumberofShare(stocks.getNumberofShare() - amount);
+					 transaction = "Sold : The "+ amount +" of stock "+stocks.getStockSymbol();
+					
 				}
 				else if (stocks.getNumberofShare() - amount == 0) 
 				{
+					 transaction = "Sold : The "+ amount +" of stock "+stocks.getStockSymbol();
 					stockslist.remove(stocks);
 				}
 				checkItemRemoved = true;
@@ -130,11 +140,20 @@ public class StockServiceImplementation implements StockServices
 		}
 		if(checkItemRemoved)
 		{
-			System.out.println("The "+ amount +" stock of "+symbol +" sold successfully");			
+			System.out.println("The "+ amount +" stock of "+symbol +" sold successfully");
+			stockTransaction.push(transaction);
 		}
 		else
 		{
 			System.out.println("stock not selled because you dont have enough shares");
+		}
+	}
+	@Override
+	public void getTrasaction() 
+	{
+		for (String trasaction : stockTransaction)
+		{
+			System.out.println(trasaction);
 		}
 	}
 
