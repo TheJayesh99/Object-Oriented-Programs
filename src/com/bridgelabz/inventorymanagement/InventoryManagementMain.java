@@ -1,4 +1,4 @@
-package inventorymanagementprogram;
+package com.bridgelabz.inventorymanagement;
 
 import java.util.Scanner;
 

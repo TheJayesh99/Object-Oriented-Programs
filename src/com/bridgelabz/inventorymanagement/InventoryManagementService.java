@@ -1,4 +1,4 @@
-package inventorymanagementprogram;
+package com.bridgelabz.inventorymanagement;
 
 public interface InventoryManagementService 
 {
