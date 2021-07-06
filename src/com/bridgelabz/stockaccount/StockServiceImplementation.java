@@ -1,14 +1,17 @@
 package com.bridgelabz.stockaccount;
 
 import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Stack;
 
 public class StockServiceImplementation implements StockServices
 {
 	LinkedList <StockDetails> stockslist = new LinkedList<StockDetails>();
 	Stack<String> stockTransaction = new Stack<String>();
+	Queue<String> stockTimeStamp = new LinkedList<String>();
 
 	@Override
+	//method to add stocks 
 	public void addStock(StockDetails stock)
 	{
 		if (ItemAlreadyPresent(stock))
@@ -16,14 +19,15 @@ public class StockServiceImplementation implements StockServices
 			System.out.println("Item already exsists you can try update option to chenge the value");
 		}
 		else
-		{
-			
+		{	
 			stockslist.add(stock);
 			System.out.println(stock.getStockName() +" Added sucessfully");
 			String transaction = "Purchased : The "+ stock.getNumberofShare() +" of stock "+stock.getStockSymbol();
 			stockTransaction.push(transaction);
+			stockTimeStamp.add(transaction +" at " +getCurrentTime());
 		}
 	}
+	//method to check stock already present 
 	private boolean ItemAlreadyPresent(StockDetails stock)
 	{
 		boolean check = false ; 
@@ -39,6 +43,7 @@ public class StockServiceImplementation implements StockServices
 	}
 
 	@Override
+	//method to get all details in stock account
 	public void getDetails() 
 	{
 		System.out.println("Stocks in the Inventory are ");
@@ -51,6 +56,7 @@ public class StockServiceImplementation implements StockServices
 	}
 
 	@Override
+	//method to get details of particular stock account
 	public void getDetailsByName(String stockName) 
 	{
 		boolean found = false;
@@ -71,6 +77,7 @@ public class StockServiceImplementation implements StockServices
 	}
 
 	@Override
+	//method to calculate value of each stock
 	public void calculateValueOfEachItem()
 	{
 		for ( StockDetails stocks : stockslist) 
@@ -81,6 +88,7 @@ public class StockServiceImplementation implements StockServices
 	}
 
 	@Override
+	//method to calculate value of all the stocks
 	public void getTotalValue() 
 	{
 		double totalValue = 0;
@@ -93,6 +101,7 @@ public class StockServiceImplementation implements StockServices
 
 	}
 	@Override
+	//method to buy stocks
 	public void buyStocks(int amount , String symbol) 
 	{
 		boolean checkItem = false;
@@ -103,6 +112,7 @@ public class StockServiceImplementation implements StockServices
 				stocks.setNumberofShare(stocks.getNumberofShare()+amount);
 				String transaction = "Purchased :  The "+ amount +" of stock "+stocks.getStockSymbol();
 				stockTransaction.push(transaction);
+				stockTimeStamp.add(transaction +" at " +getCurrentTime());
 				checkItem = true;
 			}
 		}
@@ -117,6 +127,7 @@ public class StockServiceImplementation implements StockServices
 
 	}
 	@Override
+	//method to sell stocks
 	public void sellStocks(String symbol,int amount) {
 		boolean checkItemRemoved = false;
 		String transaction = null;
@@ -127,21 +138,22 @@ public class StockServiceImplementation implements StockServices
 				if(stocks.getNumberofShare() - amount > 0)
 				{					
 					stocks.setNumberofShare(stocks.getNumberofShare() - amount);
-					 transaction = "Sold : The "+ amount +" of stock "+stocks.getStockSymbol();
-					
+					transaction = "Sold : The "+ amount +" of stock "+stocks.getStockSymbol();
+					checkItemRemoved = true;
 				}
 				else if (stocks.getNumberofShare() - amount == 0) 
 				{
-					 transaction = "Sold : The "+ amount +" of stock "+stocks.getStockSymbol();
+					transaction = "Sold : The "+ amount +" of stock "+stocks.getStockSymbol();
 					stockslist.remove(stocks);
+					checkItemRemoved = true;
 				}
-				checkItemRemoved = true;
 			}
 		}
 		if(checkItemRemoved)
 		{
 			System.out.println("The "+ amount +" stock of "+symbol +" sold successfully");
 			stockTransaction.push(transaction);
+			stockTimeStamp.add(transaction +" at " +getCurrentTime());
 		}
 		else
 		{
@@ -149,12 +161,29 @@ public class StockServiceImplementation implements StockServices
 		}
 	}
 	@Override
+	//method to show past transaction
 	public void getTrasaction() 
 	{
 		for (String trasaction : stockTransaction)
 		{
 			System.out.println(trasaction);
 		}
+	}
+	@Override
+	//method to show past transaction by time stamp 
+	public void getTimestamp() 
+	{  
+		for (String timestamp : stockTimeStamp)
+		{
+			System.out.println(timestamp);
+		}
+	}
+	//method to get current time
+	private java.util.Date getCurrentTime()
+	{
+		long millis=System.currentTimeMillis();  
+		java.util.Date date=new java.util.Date(millis);
+		return date;
 	}
 
 }

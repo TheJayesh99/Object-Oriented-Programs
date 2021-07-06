@@ -18,4 +18,7 @@ public interface StockServices
 	public void sellStocks(String sellStocks,int amount);
 	//method to show past transaction
 	public void getTrasaction();
+	//method to show past transaction by time stamp 
+	public void getTimestamp();
+	
 }

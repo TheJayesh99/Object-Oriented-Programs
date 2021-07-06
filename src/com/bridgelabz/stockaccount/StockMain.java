@@ -12,6 +12,7 @@ public class StockMain
 	public static final int BUY_STOCKS = 6;
 	public static final int SELL_STOCKS = 7;
 	public static final int CHECK_PAST_TRASACTIONS = 8;	
+	public static final int CHECK_PAST_TRASACTIONS_TIMESTAMP = 9;	
 	public static final int QUIT = 0;
 
 	public static void main(String[] args)
@@ -26,7 +27,7 @@ public class StockMain
 					+ " \n3) Get details of particular Stock \n4) Calculate value of each Stock"
 					+ " \n5) Calculate total value \n6) Buy Stocks "
 					+ "\n7) Sell Stocks \n8) Check Past Transaction"
-					+ "\n0)Quit");
+					+ "\n9) check past trasactions timestamp \n0)Quit");
 			System.out.println("Enter Your Choice ");
 
 			int userChoice = scanner.nextInt();
@@ -107,6 +108,12 @@ public class StockMain
 			case CHECK_PAST_TRASACTIONS :
 			{
 				newStocks.getTrasaction();
+				break;
+			}
+			
+			case CHECK_PAST_TRASACTIONS_TIMESTAMP :
+			{
+				newStocks.getTimestamp();
 				break;
 			}
 			
