@@ -12,4 +12,8 @@ public interface StockServices
 	public void calculateValueOfEachItem();
 	//method to calculate value of all the stocks
 	public void getTotalValue();
+	//method to buy stocks
+	public void buyStocks(int amount , String symbol);
+	//method to sell stocks
+	public void sellStocks(String sellStocks,int amount);
 }

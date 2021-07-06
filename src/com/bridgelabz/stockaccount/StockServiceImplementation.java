@@ -43,7 +43,7 @@ public class StockServiceImplementation implements StockServices
 		{
 			System.out.println((i++)+") "+stocks);
 		}
-		
+
 	}
 
 	@Override
@@ -63,7 +63,7 @@ public class StockServiceImplementation implements StockServices
 		{
 			System.out.println("Stock not found");			
 		}
-		
+
 	}
 
 	@Override
@@ -71,9 +71,9 @@ public class StockServiceImplementation implements StockServices
 	{
 		for ( StockDetails stocks : stockslist) 
 		{
-			System.out.println("value of "+stocks.getStockName()+" is "+( stocks.getNumberofShare()*stocks.getSharePrice() ) );
+			System.out.println("value of "+stocks.getStockName()+" is "+( stocks.getNumberofShare()*stocks.getPricePerShare() ) );
 		}
-		
+
 	}
 
 	@Override
@@ -83,10 +83,59 @@ public class StockServiceImplementation implements StockServices
 
 		for (StockDetails stocks : stockslist) 
 		{
-			totalValue += stocks.getNumberofShare()*stocks.getSharePrice();
+			totalValue += stocks.getNumberofShare()*stocks.getPricePerShare();
 		}
 		System.out.println("Total values of all stocks are "+totalValue);
-		
+
+	}
+	@Override
+	public void buyStocks(int amount , String symbol) 
+	{
+		boolean checkItem = false;
+		for (StockDetails stocks : stockslist)
+		{
+			if (stocks.getStockSymbol().equals(symbol))
+			{	
+				stocks.setNumberofShare(stocks.getNumberofShare()+amount);; 
+				checkItem = true;
+			}
+		}
+		if(checkItem)
+		{
+			System.out.println("The "+ amount +" stock of "+symbol +" purchased successfully");			
+		}
+		else
+		{
+			System.out.println("stock not found try adding your stock using add stock");
+		}
+
+	}
+	@Override
+	public void sellStocks(String symbol,int amount) {
+		boolean checkItemRemoved = false;
+		for (StockDetails stocks : stockslist)
+		{
+			if (stocks.getStockSymbol().equals(symbol))
+			{
+				if(stocks.getNumberofShare() - amount > 0)
+				{					
+					stocks.setNumberofShare(stocks.getNumberofShare() - amount);
+				}
+				else if (stocks.getNumberofShare() - amount == 0) 
+				{
+					stockslist.remove(stocks);
+				}
+				checkItemRemoved = true;
+			}
+		}
+		if(checkItemRemoved)
+		{
+			System.out.println("The "+ amount +" stock of "+symbol +" sold successfully");			
+		}
+		else
+		{
+			System.out.println("stock not selled because you dont have enough shares");
+		}
 	}
 
 }
