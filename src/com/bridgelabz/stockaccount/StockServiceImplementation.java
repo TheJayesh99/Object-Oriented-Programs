@@ -22,7 +22,7 @@ public class StockServiceImplementation implements StockServices
 		{	
 			stockslist.add(stock);
 			System.out.println(stock.getStockName() +" Added sucessfully");
-			String transaction = "Purchased : The "+ stock.getNumberofShare() +" of stock "+stock.getStockSymbol();
+			String transaction = "Added : The "+ stock.getNumberofShare() +" of stock "+stock.getStockSymbol();
 			stockTransaction.push(transaction);
 			stockTimeStamp.add(transaction +" at " +getCurrentTime());
 		}
@@ -102,7 +102,7 @@ public class StockServiceImplementation implements StockServices
 	}
 	@Override
 	//method to buy stocks
-	public void buyStocks(int amount , String symbol) 
+	public void sellStocks( String symbol,int amount) 
 	{
 		boolean checkItem = false;
 		for (StockDetails stocks : stockslist)
@@ -110,7 +110,7 @@ public class StockServiceImplementation implements StockServices
 			if (stocks.getStockSymbol().equals(symbol))
 			{	
 				stocks.setNumberofShare(stocks.getNumberofShare()+amount);
-				String transaction = "Purchased :  The "+ amount +" of stock "+stocks.getStockSymbol();
+				String transaction = "Sold :  The "+ amount +" of stock "+stocks.getStockSymbol();
 				stockTransaction.push(transaction);
 				stockTimeStamp.add(transaction +" at " +getCurrentTime());
 				checkItem = true;
@@ -118,7 +118,7 @@ public class StockServiceImplementation implements StockServices
 		}
 		if(checkItem)
 		{
-			System.out.println("The "+ amount +" stock of "+symbol +" purchased successfully");			
+			System.out.println("The "+ amount +" stock of "+symbol +" Sold successfully");			
 		}
 		else
 		{
@@ -128,7 +128,7 @@ public class StockServiceImplementation implements StockServices
 	}
 	@Override
 	//method to sell stocks
-	public void sellStocks(String symbol,int amount) {
+	public void  buyStocks(int amount,String symbol) {
 		boolean checkItemRemoved = false;
 		String transaction = null;
 		for (StockDetails stocks : stockslist)
@@ -138,12 +138,12 @@ public class StockServiceImplementation implements StockServices
 				if(stocks.getNumberofShare() - amount > 0)
 				{					
 					stocks.setNumberofShare(stocks.getNumberofShare() - amount);
-					transaction = "Sold : The "+ amount +" of stock "+stocks.getStockSymbol();
+					transaction = "Purchased : The "+ amount +" of stock "+stocks.getStockSymbol();
 					checkItemRemoved = true;
 				}
 				else if (stocks.getNumberofShare() - amount == 0) 
 				{
-					transaction = "Sold : The "+ amount +" of stock "+stocks.getStockSymbol();
+					transaction = "Purchased : The "+ amount +" of stock "+stocks.getStockSymbol();
 					stockslist.remove(stocks);
 					checkItemRemoved = true;
 				}
@@ -151,13 +151,13 @@ public class StockServiceImplementation implements StockServices
 		}
 		if(checkItemRemoved)
 		{
-			System.out.println("The "+ amount +" stock of "+symbol +" sold successfully");
+			System.out.println("The "+ amount +" stock of "+symbol +" Purchased successfully");
 			stockTransaction.push(transaction);
 			stockTimeStamp.add(transaction +" at " +getCurrentTime());
 		}
 		else
 		{
-			System.out.println("stock not selled because you dont have enough shares");
+			System.out.println("stock not buyed because company dont have enough shares");
 		}
 	}
 	@Override
